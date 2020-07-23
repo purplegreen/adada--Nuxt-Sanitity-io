@@ -12,7 +12,7 @@ Start Frontend
 To serve with hot reload at localhost:3000, run this command within the web folder:
 
 ```
-npm run serve
+npm run dev
 
 ```
 
