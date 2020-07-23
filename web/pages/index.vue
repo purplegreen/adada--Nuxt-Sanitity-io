@@ -2,9 +2,10 @@
   <section>
     <h1>DADA</h1>
 
+    <!-- <ul v-if="loading == false"> -->
     <ul>
-      <li v-for="post in posts" :key="post._id" class="">
-        <h3>{{ post.title }}</h3>
+      <li v-for="post in posts" ref="post" :key="post._id">
+        <h3 class="box">{{ post.title }}</h3>
 
         <img
           v-if="post.mainImage"
@@ -17,13 +18,22 @@
         </p>
       </li>
     </ul>
+
+    <h2 class="box">
+      hello hello
+    </h2>
   </section>
 </template>
 
 <script>
 import imageUrlBuilder from '@sanity/image-url'
 import BlockContent from 'sanity-blocks-vue-component'
+import { gsap } from 'gsap/dist/gsap'
+import { TextPlugin } from 'gsap/dist/TextPlugin'
+import { ScrollTrigger } from 'gsap/dist/ScrollTrigger'
 import sanity from '../sanity'
+
+gsap.registerPlugin(TextPlugin, ScrollTrigger)
 
 const imageBuilder = imageUrlBuilder(sanity)
 const query = `*[_type == "post" ] | order(releaseDate desc)
@@ -54,7 +64,9 @@ export default {
   created() {
     this.fetchData()
   },
-  mounted() {},
+  mounted() {
+    this.startAnimation()
+  },
   methods: {
     imageUrlFor(source) {
       return imageBuilder.image(source)
@@ -75,11 +87,22 @@ export default {
       //   this.startAnimation()
       // })
     },
-  },
-  head() {
-    return {
-      title: 'Listing',
-    }
+    startAnimation() {
+      ScrollTrigger.defaults({
+        toggleActions: 'restart pause resume none',
+        markers: true,
+      })
+      gsap.to('.box', {
+        scrollTrigger: '.box', // start the animation when ".box" enters the viewport (once)
+        x: 500,
+        markers: true,
+      })
+    },
+    head() {
+      return {
+        title: 'Listing',
+      }
+    },
   },
 }
 </script>
