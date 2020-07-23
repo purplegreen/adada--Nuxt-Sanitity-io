@@ -4,8 +4,7 @@
 
     <ul>
       <li v-for="post in posts" :key="post._id" class="">
-        {{ post.title }}
-        <!-- <img v-if="post.mainImage" :src="post.mainImage" /> -->
+        <h3>{{ post.title }}</h3>
 
         <img
           v-if="post.mainImage"
