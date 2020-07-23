@@ -2,10 +2,9 @@
   <section>
     <h1>DADA</h1>
 
-    <!-- <ul v-if="loading == false"> -->
-    <ul>
-      <li v-for="post in posts" ref="post" :key="post._id">
-        <h3 class="box">{{ post.title }}</h3>
+    <ul v-if="loading == false">
+      <li v-for="post in posts" ref="post" :key="post._id" class="box">
+        <h3 class="">{{ post.title }}</h3>
 
         <img
           v-if="post.mainImage"
@@ -74,18 +73,20 @@ export default {
     fetchData() {
       this.error = this.post = null
       this.loading = true
-      sanity.fetch(query).then(
-        (posts) => {
-          this.posts = posts
-          // this.loading = false
-        },
-        (error) => {
-          this.error = error
-        }
-      )
-      // .then(() => {
-      //   this.startAnimation()
-      // })
+      sanity
+        .fetch(query)
+        .then(
+          (posts) => {
+            this.posts = posts
+            this.loading = false
+          },
+          (error) => {
+            this.error = error
+          }
+        )
+        .then(() => {
+          this.startAnimation()
+        })
     },
     startAnimation() {
       ScrollTrigger.defaults({
@@ -94,7 +95,7 @@ export default {
       })
       gsap.to('.box', {
         scrollTrigger: '.box', // start the animation when ".box" enters the viewport (once)
-        x: 500,
+        x: 50,
         markers: true,
       })
     },
