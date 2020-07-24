@@ -18,7 +18,7 @@
       </li>
     </ul>
 
-    <h2 class="box">
+    <h2 ref="message">
       hello hello
     </h2>
   </section>
@@ -27,9 +27,9 @@
 <script>
 import imageUrlBuilder from '@sanity/image-url'
 import BlockContent from 'sanity-blocks-vue-component'
-import { gsap } from 'gsap/dist/gsap'
-import { TextPlugin } from 'gsap/dist/TextPlugin'
-import { ScrollTrigger } from 'gsap/dist/ScrollTrigger'
+import { gsap } from 'gsap'
+import { TextPlugin } from 'gsap/TextPlugin'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import sanity from '../sanity'
 
 if (process.client) {
@@ -91,14 +91,22 @@ export default {
         })
     },
     startAnimation() {
+      if (!process.client) return
       ScrollTrigger.defaults({
         toggleActions: 'restart pause resume none',
-        markers: true,
+        // markers: true,
       })
-      gsap.to('.box', {
-        scrollTrigger: '.box', // start the animation when ".box" enters the viewport (once)
-        x: 50,
-        markers: true,
+      gsap.utils.toArray(this.$refs.post).forEach((el, i) => {
+        gsap.to(el, {
+          scrollTrigger: {
+            trigger: el,
+            start: 'top center',
+            end: 'bottom 100px',
+            scrub: i * 0.1,
+          },
+          rotation: '+=360',
+          duration: 9,
+        })
       })
     },
     head() {
