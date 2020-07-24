@@ -1,6 +1,8 @@
 # adada
 
-# Frontend | Nuxt.js
+# Frontend | Nuxt.js Universal Mode
+
+# GSAP Animation
 
 # Headless CMS | Sanity.io
 
