@@ -32,7 +32,9 @@ import { TextPlugin } from 'gsap/dist/TextPlugin'
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger'
 import sanity from '../sanity'
 
-gsap.registerPlugin(TextPlugin, ScrollTrigger)
+if (process.client) {
+  gsap.registerPlugin(TextPlugin, ScrollTrigger)
+}
 
 const imageBuilder = imageUrlBuilder(sanity)
 const query = `*[_type == "post" ] | order(releaseDate desc)
